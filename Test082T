@@ -1,0 +1,90 @@
+class Node {
+	int name = 0;
+	Node next = null;
+	
+	Node( int i, Node j ) {
+		name = i;
+		next = null;
+	}
+}
+
+class XList {
+	Node head = null;
+	Node tail = null;
+	
+	XList() {
+		head = new Node( 0, null );
+		tail = head;
+	}
+	
+	void add( int i ) {
+		tail.next = new Node( i, null );
+		tail = tail.next;
+	}
+	
+	void printAll() {
+		for( Node t = head.next ; t != null ; t = t.next ) {
+			System.out.println( t.name );
+		}
+	}
+	
+	void deleteAll() {
+		Node post = head;
+		Node pre = head.next;
+		
+		while( pre != null ) {
+			post.next = null;
+			
+			post = pre;
+			pre = pre.next;
+		}
+		post = null;
+		tail = head;
+	}
+	
+	//	동작 상황을 그림 그려서 정리!!
+	int removeLikeQueue() {
+		//	비어있을때는 동작하면 안된다. 에러난다.
+		if( head.next == null ) {
+			return -1;
+		}
+		
+		Node post = head;
+		Node pre = head.next;
+		
+		post.next = pre.next;
+		pre.next = null;
+		
+		//	포인터의 == 는 같은 대상을 가리키면 true
+		//  tail == pre 가 되는 시점은 딱 하나 남았을때만 성립. 이때는 지우고 난 다음 tail 은 원점으로
+		if( tail == pre ) {
+			tail = head;
+		}
+		
+		return pre.name;
+	}
+}
+
+/*	스택 & 큐
+
+	스택 : 늦게 들어간 넘 부터 순서대로 꺼낸다. ( 설거지 할때 쌓아놓은 접시 행굴때 )
+	큐 : 먼저 들어간 넘 부터 순서대로 꺼낸다. ( 은행 번호표 )
+*/
+public class Test082 {
+	public static void main( String[] args ) {
+		XList l = new XList();
+		l.add( 10 );
+		l.add( 20 );
+		
+		int n = l.removeLikeQueue();
+		System.out.println( n );
+		
+		n = l.removeLikeQueue();
+		System.out.println( n );
+
+		l.add( 30 );
+
+		l.printAll();	// 와꾸짜고 & 포인터 한개 써서 for 반복하며 출력!!
+	}
+}
+

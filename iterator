@@ -1,0 +1,86 @@
+class Node {
+	int name = 0;
+	Node next = null;
+	
+	Node( int i, Node j ) {
+		name = i;
+		next = j;
+	}
+}
+
+interface YIterator {
+	public boolean hasNext();
+	public int next();
+}
+
+class YList {
+	Node head = null;
+	
+	YList() {
+		head = new Node( 0, null );
+	}
+	
+	//	이런 걸 짜야 할 때가 있는데 이런걸 java 에서 제공하진 않는다.
+	void add( int i ) {
+		Node post = head;
+		Node pre = head.next;
+		while( pre != null && pre.name > i ) {
+			post = pre;
+			pre = pre.next;
+		}
+		post.next = new Node( i, pre );
+	}
+
+	void printAll() {
+		for( Node t = head.next ; t != null ; t = t.next ) {
+			System.out.println( t.name );
+		}
+	}
+	
+	//	printAll 돌리는 걸 인터페이스를 상속한 무명클래스로 돌리게 만들었을 뿐
+	YIterator iterator() {
+		return new YIterator() {
+			Node t = head.next;
+			
+			public boolean hasNext() {
+				return ( t != null );
+			}
+			
+			public int next() {
+				int r = t.name;
+				t = t.next;
+				return r;
+			}
+		};
+	}
+}
+public class Test127 {
+	public static void main( String[] args ) {
+		YList l = new YList();
+		l.add( 40 );
+		l.add( 10 );
+		l.add( 50 );
+		l.add( 30 );		
+		
+		YIterator it = l.iterator();
+		while( it.hasNext() ) {
+			int t = it.next();
+			System.out.println( t );
+		}
+		//	l.printAll();
+	}
+}
+
+/*
+	//	아래 코드에서 post 는 tail 의 역할을 한다.
+	void add( int i ) {
+		Node post = head;
+		Node pre = head.next;
+		while( pre != null ) {
+			post = pre;
+			pre = pre.next;
+		}
+		post.next = new Node( i, null );
+	}
+
+*/
