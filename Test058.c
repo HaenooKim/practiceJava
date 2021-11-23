@@ -2,7 +2,7 @@
 
 struct node {
 	int name;
-	struct node* next;
+	struct node* next; //구조체 안에 구조체가 들어가있는 게 아니라 포인터가 들어가있는 것.
 };
 
 

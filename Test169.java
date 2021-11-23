@@ -31,9 +31,6 @@ class XFrame extends Frame {
 		Button btn = new Button("Click");
 		btn.addActionListener(new Apple());
 		
-		TextField tf = new TextField(24);
-		tf.setText("apple banana..");
-		
 		
 		
 		Panel p2 = new Panel();

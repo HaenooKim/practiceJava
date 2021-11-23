@@ -13,6 +13,7 @@ class Temp {
 
 interface ITemp {
 	// public static void print(); ->에러남
+	
 	/*이건 오버라이딩을 전제로 하는 함수이어야 하고
 	오버라이딩은 함수포언터 형태로 운용되어야 하고
 	그러러면 인스턴스에 함수포인터가 있어야 하고

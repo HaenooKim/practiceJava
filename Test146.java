@@ -9,6 +9,10 @@ public class Test146 {
 	public static void main(String[] args) {
 		Map<String, Object> map = new HashMap<String, Object> ();
 		
+		for (int i=0; i<5; i++) {
+			
+		}
+		
 		Object val = map.get("Spark");
 		if(val == null) {
 			val = new Spark();

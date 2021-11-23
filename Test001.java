@@ -24,6 +24,10 @@ dir : 폴더 아래 파일 목록 확인
 javac : *.java 를 읽어들여 *.class파일을 만든다.
 
 
+main 없는 클래스는 컴파일은 되어도 실행할 수 없다. 
+
+파일이름과 public class 이름은 완전히 일치해야 한다. (대소문자를 가린다)
+
 mkdir C:\JavaWork\
 cd C:\JavaWork\
 */

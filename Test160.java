@@ -32,6 +32,9 @@ public class Test160 {
 			//	name apple
 			l = sc.nextLine();
 			
+			
+			
+			
 			/*
 				data -> setData
 				name -> setName 

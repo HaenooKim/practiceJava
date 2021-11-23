@@ -6,3 +6,12 @@ public class Test009 {
 		System.out.println(10.0 + 10);
 	}
 }
+
+/*
+
+double + int가 되면?
+=> int를 double로 자동형변환 시키고 double+double로 바뀐다.
+
+자동형변환  : byte < short < int < long < float < double
+
+*/

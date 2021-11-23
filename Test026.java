@@ -28,3 +28,14 @@ public class Test026 {
 	}
 
 }
+
+/*
+
+ll
+llo
+lloW
+
+ldx
+
+
+*/

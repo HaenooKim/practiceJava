@@ -24,6 +24,11 @@ int + int = int
 
 (10.0 / 3.0) == 3.33333는 오동작 가능성이 있다.
 
+int / int = int ; 
+컴퓨터는 기본적으로 같은 타입의 자료형끼리 연산한다.
+int * int = int
+int - int = int
+double / double = double
 
 
 */
