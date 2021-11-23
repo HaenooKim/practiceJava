@@ -3,7 +3,7 @@ import java.net.Socket;
 public class Test193C { //클라이언트는 찾아가는 쪽
 	public static void main(String[] args) {
 		try {
-			Socket skt = new Socket("192.168.0.11", 7890); //찾아가서 접속시도->기다리던 서버와 만나면 소켓을 생성후 리턴
+			Socket skt = new Socket("121.146.118.88", 7890); //찾아가서 접속시도->기다리던 서버와 만나면 소켓을 생성후 리턴
 			skt.close();
 		}
 		catch(Throwable e) {}
