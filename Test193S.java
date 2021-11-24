@@ -7,7 +7,7 @@ public class Test193S { //서버는 기다리는 쪽
 			ServerSocket svr = new ServerSocket(7890); //전달인자는 포트번호임 (네트워크 통로의 고유번호)
 			System.out.println("before accept"); //클라이언트를 기다림
 			
-			Socket skt = svr.accept();
+			Socket skt = svr.accept(); //.accpet()의 리턴타입이 Socket이라 가능함.
 			
 			System.out.println(skt.toString());
 			
