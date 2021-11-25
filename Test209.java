@@ -9,6 +9,11 @@ public class Test209 {
 			Socket skt = svr.accept();
 			String l = skt.getInetAddress().toString();
 			System.out.println(l);
+			
+			if (l.indexOf("127.0.0.1")!=-1) { //127.0.0.1로 접속하면 서버를 꺼지게 한다.
+				alive = false;
+			}
+			
 			skt.close();
 		}
 		

@@ -45,6 +45,22 @@ class Toilet {
 	}
 }
 
+class MonitorCtrl {
+	
+	//이 함수는 백그라운드 스레드가 호출되게 만들어야 한다.
+	public synchronized void letMeWait() {
+		try {
+			wait();
+		}
+		catch(InterruptedException e) {}
+		
+		public synchronized void letMeNotify() {
+			notify();
+		}
+	}
+	
+}
+
 
 class Kim extends Thread {
 	private Toilet toi = null;
