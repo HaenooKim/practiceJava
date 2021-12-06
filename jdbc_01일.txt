@@ -1,0 +1,47 @@
+MySQL은 하나의 서버에 여러개의 database를 둘 수 있다.
+	하지만 database생성권한은 없으니까 지금 있는 거 그냥 쓴다.
+	
+	create table temp_02T(
+		id2 INT NULL ,
+		data VARCHAR(9) NULL
+	);
+	
+	INSERT INTO temp_02T values(100, '홍길동');
+	select * from temp_02T;
+	Insert into temp_02T values(200, '고길동');
+	UPDATE temp_02T SET id2=300;
+	
+	-- update : 입력되어있는 데이터를 변경
+	-- insert : 가로 한 열 입력
+	-- select : 내용조회
+	-- delete : 입력된 데이터를 삭제
+	delete from temp_02T; -모든 레코드를 지운다.
+	
+	
+	INSERT INTO temp_02T values(100, '박길동');
+	INSERT INTO temp_02T values(200, '최길동');
+	INSERT INTO temp_02T values(300, '홍길동');
+	INSERT INTO temp_02T values(400, '고길동');
+	
+	select * from temp_02T where id2=100 or id2=300;
+	select * from temp_02T where id2<=300 and id2>100;
+	
+	select * from temp_02T where id2 in(100, 300);
+
+	delete from temp_02T where id2= 200;
+	
+	update temp_02T set id2 = id2+1;
+	- where 조건이 없으면 모든 레코드를 수정한다.
+	
+	select * from temp_02T where id2 between 301 and 401;
+	-- id2>= 301 and id2<=401와 동일하다.
+	
+	select * from temp_02T where id2 NOT IN (102, 301);
+	-- 102와 301를 제외한 것을 selection
+	
+	select * from temp_02T where data like '고_';
+	_는 임의의 한글자를 뜻하고
+	%는 임의의 여러글자
+	
+	select * from temp_02T where data not like '고_';
+	:like 의 역을 구하고자 할 때는 not like를 쓴다.
