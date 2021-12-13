@@ -1,0 +1,230 @@
+create table temp_06T (
+	no INT NOT NULL
+);
+
+insert into temp_06T values(100);
+insert into temp_06T values(101);
+insert into temp_06T values(102);
+
+select * from temp_06T;
+
+
+--CONSTARINT 개념!! -- 필드에 물리적인 제약을 건다
+ALTER TABLE temp_06T ADD CONSTRAINT PK_temp06_no 
+PRIMARY KEY(NO);
+
+ALTER TABLE temp_06T : temp_06T를 수정한다.
+ADD CONSTARINT : CONSTRAINT를 더하는 형태로
+PK_temp06_no : CONSTRAINT이름
+PRIMARY : CONSTRAINT의 종류 중의 PK
+(no) : no필드에 대해서 
+종류_테이블명_필드명 :추천하는 명명방식
+
+insert into temp_06T values(102);
+
+PK CONSTRAINT를 걸면 해당 필드는 NOT NULL + NO DUPLICATE성질을 보장받는다.
+
+DROP TABLE temp_06T;
+
+create table temp_06T (
+	no INT NULL
+);
+
+insert into temp_06T values(100);
+insert into temp_06T values(101);
+insert into temp_06T values(102);
+
+ALTER TABLE temp_06T ADD CONSTRAINT PK_temp06_no PRIMARY KEY(no);
+
+insert into temp_06T values(NULL); - NOT NULL
+insert into temp_06T values(102); - NO DUPLICATE
+
+"PK CONSTRAINT" 를 걸어줌으로써 해당 필드에 PK로서의 물리적인 제약을 부여했다.
+
+CONSTRAINT는 처음부터 걸지말고 설계가 마무리 된 다음에 걸어주는 것이 바람직하다.
+
+UNIQUE CONSTRAINT : NO DUPLICATE만을 보장함
+
+create table temp_07T (
+	no INT NULL
+);
+
+insert into temp_07T values (NULL);
+insert into temp_07T values (100);
+insert into temp_07T values (101);
+insert into temp_07T values (102);
+
+ALTER TABLE temp_07T ADD CONSTRAINT UQ_temp07_no 
+UNIQUE (no);
+
+insert into temp_07T values (NULL);
+--NULL 이 중복되는 건 괜찮다.
+insert into temp_07T values (102); --에러
+-- 데이터 중복은 허가 하지 않는다.
+
+-> 이 개념이 제 3정규화를 적용 시킬때 매우 유용하게 쓰인다 (주 키에 종속되지 않는 필드는 분리시킨다.)
+
+고객은 COP를 대여 ING한다 : 일대다 관계
+
+대여 ING 속성 ? 대여일 대여금 반납예정일
+
+다대다 대응으로 만들고 UNIQUE CONSTRAINT 걸면 -> 일대다 대응을 만들어 낸다.
+
+다대다 대응 개념으로 새로운 테이블을 만들고
+copy_no 에 unique 걸어주니까
+하나의 copy 는 하나의 고객에게만 대여되고
+하나의 고객은 여러 copy를 대여하고
+일대다 관계를 물리적으로 구현하는 형태가 나온다.
+
+COPY테이블은 주 키에 종속적이지 않은 필드를 성공적으로 분리할 수 있게 되었다.
+(카톡 12/10 사진 참조)
+
+일대다 관계에서 UNIQUE를 걸면
+일대일 관계처럼 설계되어진다.
+
+일대일 관계는 상속...과 유사한 형태를 표현함
+
+주문을 관계로 볼까 아니면 엔티티로 볼까가 이 설계의 큰 흐름임.
+여기 1004번 뒷자리인데
+자장면 보통하나 곱배기 둘 거기에 탕수육 대짜 하나요
+
+-다음날-
+여기 1004번 뒷자리인데요 자장면 보통 셋이요 -> 안들어가네?
+주문을 관계(다대다)로 봐야하는 건가?
+
+................................
+비디오 대여점처럼 준비중 배달중 정도로 따로 만드는 방법??
+이건 두개의 개념 사이에 차이가 거의 없고 속성 하나로 구별 가능한 수준이다.
+이 두개를 따로 만들어 가는 것은 무의미하다.
+.................................
+따라서 주문은 엔티티다!!
+- PK는 주문번호로 한다.
+- 추상명사? 맞다.
+- 2개 이상 속성 : 현재상태(준비중/배달중), 배달주소
+
+고객은 주문을 발생시킨다 -> 어울리고 기록할 가치가 있다.
+일대다 대응이 된다.
+
+..................................
+고객은 주문을 일으킨다... 에 대한 업무논리
+
+전화가 온다 >  전화번호 확인해서 일단 뒷자리를 태블릿에 넣는다. >
+대표주소가 뜨고 > 배달주소가 대표주소인지 확인하고 >
+아니면 주소를 새로 입력
+
+주문과 메뉴가 다대다 관계가 성립된다.
+따라서 새로운 테이블을 만들어 구현하고 수량이 여기의 속성으로 들어간다.
+
+주문에 관련된 큰 그림이 그려진다.
+......................................
+
+매출관리에서 보면 가격은 언제나 일정한가?를 따져본다.
+
+물론 JOIN이나 서브쿼리를 써서 가격을 메뉴에서 참조해서 쓸 수 있지만
+가격이 오르게 되면 가거의 판매가격까지 현재의 가격으로 계산될 수 있다
+따라서 판매단가는 존재해야 한다.
+......................................
+총 금액을 주문에 따로 둬야 하나 말아야하나? 이건 정하기 나름.
+매상집계는 비교적 자주 일어난다. 해서 JOIN의 회수를 줄인다는 의미도 있지만..
+쿠폰의 존재가 있기 때문에 단가*개수의 합이 판매액이 아닐수도 있음.
+
+해서 총 금액은 따로 있어야 하고,
+거기에 사유를 입력할 수 있는 NULL가능한 필드 정도는 있어야 한다.
+
+만일 쿠폰을 제시해서 할인을 받으면 할인 금액을 총금액에 적고 사유를 입력받는다.
+배달시 쿠폰이 회수되지 않은 부분에 대한 처리는 시스템 밖에서 처리한다.
+
+......................
+앱상에서 보여주는 메뉴
+자장면 보통/ 자장면 곱배기 - 같은 메뉴야 다른메뉴야??
+앱 상에서 메뉴의 사진과 함께 소개글 같은 것이 보여지게 만든다고 해보자.
+그거를 시스템 안에서 해결해야 한다면..
+자장면 보통과 곱배기는 같은 사진과 설명을 쓴다.
+.........................
+보이는 메뉴 : pk로 짜장, 짬뽕, 탕수육...이렇게 뜨고
+사진과 설명이라는 속성을 부여한다.
+
+판매메뉴 : pk로 짜장M, 짜장L, 탕수육S, 탕수육L 이렇게 조합한 필드를 PK로 쓰도록 하자.
+짜장, 짬봉과 같은 MID는 FK이면서 동시에 SIZE와 조합하여 PK가 된다.
+
+이렇게 되면 매출 집계시 짜장으로만 GROUP BY를 지울 수 있어서 좀 더 다양한
+매출관리(자장면 보통과 자장면 곱빼기를 통합한 매출 계산)이 가능하다.
+
+-------------------------------------
+
+create table User_GT(
+	uid INT,
+	pwd INT
+);
+
+insert into User_GT values(1234, 1234);
+insert into User_GT values(3355, 3355);
+
+ALTER TABLE User_GT ADD CONSTRAINT PK_use_gt_uid PRIMARY KEY(uid);
+
+create table Test_GT (
+	no INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	content VARCHAR(20) ,
+	uid INT NULL
+);
+
+PRIMARY KEY 개념이 위에서 사용한 PRIMARY KEY CONSTRAINT 개념과 동일하다.
+테이블을 생성할 때 애초에 CONSTRAINT 를 포함하는 형태로 생성했다는 얘기
+
+insert into Test_GT values(default, '내용1', 1234);
+insert into Test_GT values(default, '내용2', 1234);
+insert into Test_GT values(default, '내용3', 3355);
+
+ALTER TABLE Test_GT ADD CONSTRAINT FK_text_gt_uid 
+FOREIGN KEY(uid) REFERENCES User_GT (uid);
+
+
+insert into Test_GT values(default, '내용2', 6655); (x)
+-- 6655는 PK쪽에 존재하지 않기에 FK에 입력할 수 없다.
+
+DELETE FROM User_GT where uid=1234; (X)
+-- 1234는 FK쪽에서 존재하고 있기에 PK를 지울 수 없다.
+
+ALTER TABLE Test_GT DROP FOREIGN KEY FK_text_gt_uid;
+ALTER TABLE Test_GT DROP INDEX FK_text_gt_uid;
+--부여 되었던 CONSTRAINT를 제거한다 (두개 다 써야함)
+--내부적으로 INDEX를 쓰기에 INDEX도 삭제한다.
+
+INSERT INTO Test_GT values (default, '내용X', 6655);
+DELETE FROM User_GT WHERE uid = 1234;
+"FK CONSTRAINT"를 걸지 않으면 참조무결성은 보장되지 않는다
+
+ALTER TABLE Test_GT ADD CONSTRAINT FK_text_gt_uid FOREIGN KEY
+(uid) REFERENCES User_GT (uid);
+--아까는 걸리던데 왜 안 걸리지?
+-- 참조 무결성이 깨져있는 테이블에는 부여될 수 없다.
+
+select * from User_GT;
++------+------+
+| uid  | pwd  |
++------+------+
+| 3355 | 3355 |
++------+------+
+
+select * from Test_GT;
+
+
++----+---------+------+
+| no | content | uid  |
++----+---------+------+
+|  1 | 내용1   | 1234 |
+|  2 | 내용2   | 1234 |
+|  3 | 내용3   | 3355 |
+|  4 | 내용X   | 6655 |
++----+---------+------+
+
+DELETE FROM Test_GT where uid != 3355;
+
+-------------------------------------
+-- PK CONSTRAINT 지우려면? 먼저 FK CONSTRAINT부터 지운다.
+ALTER TABLE Test_GT DROP FOREIGN KEY FK_text_gt_uid;
+ALTER TABLE Test_GT DROP INDEX FK_text_gt_uid;
+
+--PK CONSTRAINT 지우는 문법은 살짝 다르다.
+ALTER TABLE User_GT DROP PRIMARY KEY;
+

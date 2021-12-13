@@ -47,6 +47,5 @@ public class Test284 {
 	->Ping pukyung21.cafe24.com [183.111.242.21] 32바이트 데이터 사용
 	이라고 나온다. 해당 도메인 주소에 대한 실제 ip주소를 확인할 수 있다.
 	
-	MySQL은 하나의 서버에 여러개의 database를 둘 수 있다.
-	하지만 database생성권한은 없으니까 지금 있는 거 그냥 쓴다.
+	
 */

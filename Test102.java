@@ -21,13 +21,10 @@ public class Test102 {
 	abstract method : 선언되었지만 정의되지 않은 메소드
 	클래스로 하는 일 : 참조형 변수 선언, 인스턴스 생성, 상속받아 클래스 선언
 	
-	abstract method : 선언되었지만 정의되지 않은 메소드
-	abstract 메소드를 한가
-	
-	지라도 가졌으면 반드시 abstract class로 설정해야함
+	abstract 메소드를 한가지라도 가졌으면 반드시 abstract class로 설정해야함
 	오버라이딩 하면 abstract가 떨어져 나간다.
 	
-	abstract class를 활욜할 때 [A t = new B()]형태로 쓰는 경우가 굉장히 많음.
+	abstract class를 활용할 때 [A t = new B()]형태로 쓰는 경우가 굉장히 많음.
 	
 	
 	java의 경우 실은 내부적으로 함수포인터를 이용한 호출을 사용하고 잇는데

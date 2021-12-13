@@ -1,0 +1,69 @@
+create table temp_05T (
+    the_time datetime NOT NULL,
+    a_time date NOT NULL,
+    b_time time NOT NULL
+);
+
+datetime : 날짜+시간을 저장할 때 쓰는 자료형
+date : 날짜용 자료형
+time : 시간용 자료형
+
+INSERT INTO temp_05T values(NOW(), NOW(), NOW());
+SELECT * FROM temp_05T;
+
++---------------------+------------+----------+
+| the_time            | a_time     | b_time   |
++---------------------+------------+----------+
+| 2021-12-09 09:08:15 | 2021-12-09 | 09:08:15 |
+| 2021-12-09 09:08:48 | 2021-12-09 | 09:08:48 |
+| 2021-12-09 09:08:49 | 2021-12-09 | 09:08:49 |
++---------------------+------------+----------+
+
+
+NOW() -- 문장이 실행되는 시점의 시간
+--글쓴시간, 주문시간 등등
+
+Oracle에서는 자료형으로 date를 제공하는데 이것이 날짜+시간이다. 날짜따로 시간따로 제공하는 것은 없다.
+현재시간 입력ㄱ시 SYSDATE라는 시스템변수를 이용한다.
+ex) INSERT INTO OracleT values(SYSDATE);
+
+.................................................
+
+현재 시간부터 72시간 후를 반납기한으로 잡는다면??
+
+select the_time from temp_05T;
+
+select DATE_ADD(the_time, INTERVAL 1 DAY) FROM temp_05T;
+DATE_ADD : 날짜에 시간, 분, 날짜, 달, 년 을 더하고 뺄 수 있다.
+
+select DATE_ADD(the_time, INTERVAL 1 MONTH) FROM temp_05T;
+
+select DATE_ADD(the_time, INTERVAL 1000 DAY) FROM temp_05T;
+
+select DATE_ADD(the_time, INTERVAL -10 DAY) FROM temp_05T;
+
+INSERT INTO temp_05T values(DATE_ADD(NOW(), INTERVAL 3 DAY), NOW(), NOW());
+
+select * from temp_05T;
+
+SELECT ROUND(the_time) from temp_05T;
+-- Oracle 에서는 잘 동작한다.
+ 2021-12-09 09:08:15 >  2021-12-09 00:00:00
+
+.....................................................
+
+데이터베이스 설계 실습
+
+업무시나리오 작성 > 교환 & 검증
+
+Entity파악
+Relation
+Attribute(속성)
+
+->E-R Diagram그려서 사진 찍어 보내기
+
+
+
+
+
+
